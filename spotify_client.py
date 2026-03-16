@@ -22,5 +22,4 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
     scope=SCOPE
 ))
 
-results = sp.current_user_recently_played(limit=TEST_LIMIT)
-
+sp_results = sp.current_user_recently_played(limit=TEST_LIMIT)
