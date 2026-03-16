@@ -7,6 +7,9 @@ load_dotenv()
 
 SCOPE = "user-read-recently-played"
 
+OPS_LIMIT = 40
+TEST_LIMIT = 3
+
 client_id = os.getenv("SPOTIFY_CLIENT_ID")
 client_secret = os.getenv("SPOTIFY_CLIENT_SECRET")
 redirect_uri = os.getenv("SPOTIPY_REDIRECT_URI")
@@ -19,7 +22,5 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
     scope=SCOPE
 ))
 
-
-def get_recent_tracks(sp):
-    return sp.current_user_recently_played(limit=40)
+results = sp.current_user_recently_played(limit=TEST_LIMIT)
 
