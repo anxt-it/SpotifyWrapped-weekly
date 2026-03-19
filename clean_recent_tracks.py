@@ -23,5 +23,3 @@ def clean_data_frame(df):
 
     return rows_to_insert
 
-
-# currently does nothing
