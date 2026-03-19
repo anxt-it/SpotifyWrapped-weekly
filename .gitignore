@@ -1,0 +1,11 @@
+# Folders
+.venv/
+.idea/
+__pycache__/
+example_files/
+
+# Files
+.env
+.cache
+*.pyc
+spotify_test.db
