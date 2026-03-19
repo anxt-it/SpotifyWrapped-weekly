@@ -32,5 +32,3 @@ def get_recent_tracks(results):
 
     return recent_tracks
 
-
-

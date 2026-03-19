@@ -7,11 +7,10 @@ def load_df(data):
 
 
 def clean_data_frame(df):
-    # dtypes
-    df['played_at'] = pd.to_datetime(df['played_at'])
+    str_columns = ['track_id', 'track_name', 'artist_id', 'artist_name', 'album_id', 'album_name']
+    for col in str_columns:
+        df[col] = df[col].astype(str)
+
     return df
 
-
-# this is for test purposes only
-from recent_tracks import test_data
-# df = load_df(test_data)
+# currently does nothing

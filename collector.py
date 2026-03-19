@@ -1,16 +1,59 @@
+import sqlite3
+from numpy import integer, int64
 
 # make the request
-from spotify_client import sp_results
+from spotify_client import sp_results as raw_results
 from recent_tracks import get_recent_tracks
 
+from clean_recent_tracks import load_df, clean_data_frame
+
+
 # get extracted data
-if "error" in sp_results:
-    raise RuntimeError(f"Spotify API error {sp_results["error"]["status"]}: {sp_results["error"]["message"]}")
+if "error" in raw_results:
+    raise RuntimeError(f"Spotify API error {raw_results["error"]["status"]}: {raw_results["error"]["message"]}")
 
-uncleaned_data = get_recent_tracks(sp_results)
+records = get_recent_tracks(raw_results)
+
+# clean the data
+df = load_df(records)
+cleaned_df = clean_data_frame(df)
+
+# write dataframe to sqlite
+TEST_FILE_DB = 'spotify_test.db'
+
+conn = sqlite3.connect(TEST_FILE_DB)
+cursor = conn.cursor()
+
+create_table_query = """
+CREATE TABLE IF NOT EXISTS listening_history (
+    track_id TEXT,  
+    track_name TEXT,
+    artist_id TEXT,
+    artist_name TEXT,
+    album_id TEXT,
+    album_name TEXT,
+    duration_ms INT, 
+    played_at DATETIME,
+    UNIQUE (played_at)
+    
+);
+"""
+
+cursor.execute(create_table_query) # execute the sql command
+
+# convert all fields into python-native
+records = [tuple(map(lambda x: int(x) if isinstance(x, (integer, int64)) else x, row))
+           for row in df.to_records(index=False)]
 
 
-# clean the data - call clean_recent_tracks
+insert_or_ignore_query = """
+    INSERT OR IGNORE INTO listening_history
+    (track_id, track_name, artist_id, artist_name, album_id, album_name, duration_ms, played_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+"""
+cursor.executemany(insert_or_ignore_query, records)
 
 
-# show it to me
+conn.commit() # commit the changes
+conn.close()
+
