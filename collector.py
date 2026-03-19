@@ -1,5 +1,4 @@
 import sqlite3
-from numpy import integer, int64
 
 # make the request
 from spotify_client import sp_results as raw_results
@@ -41,18 +40,14 @@ CREATE TABLE IF NOT EXISTS listening_history (
 
 cursor.execute(create_table_query) # execute the sql command
 
-# convert all fields into python-native
-records = [tuple(map(lambda x: int(x) if isinstance(x, (integer, int64)) else x, row))
-           for row in df.to_records(index=False)]
-
 
 insert_or_ignore_query = """
     INSERT OR IGNORE INTO listening_history
     (track_id, track_name, artist_id, artist_name, album_id, album_name, duration_ms, played_at)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
 """
-cursor.executemany(insert_or_ignore_query, records)
 
+cursor.executemany(insert_or_ignore_query, cleaned_df)
 
 conn.commit() # commit the changes
 conn.close()
