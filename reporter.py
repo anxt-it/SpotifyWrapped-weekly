@@ -60,7 +60,6 @@ def build_top_artists_table(top_artist_results):
     </table>
     """
 
-
 def build_top_songs_section(top_songs_results):
     rows = ''
     for track, artist, count in top_songs_results:
@@ -127,3 +126,4 @@ top_songs = exec_query(queries['top_ten_songs'])
 
 html = format_results_to_html(total_time, top_artists, top_songs)
 
+send_email(html)
