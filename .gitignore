@@ -1,11 +1,20 @@
-# Folders
-.venv/
-.idea/
-__pycache__/
-example_files/
-
-# Files
+# Secrets and Tokens
 .env
-.cache
+.cache*
+
+# Database
+*.db
+
+# Python Internals
+__pycache__/
 *.pyc
-spotify_test.db
+
+# Environments and IDEs
+.venv/
+venv/
+.idea/
+.vscode/
+
+# Project Specific
+tests/
+example_file/
