@@ -1,8 +1,13 @@
+import datetime
 import sqlite3
+import os
+from datetime import datetime, UTC
 
-# make the request
 from spotify_client import fetch_recent_tracks
 from recent_tracks import get_recent_tracks
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BASE_DIR, 'spotify_listening_history.db')
 
 def run_pipeline():
 
@@ -21,7 +26,7 @@ def run_pipeline():
         for r in records
     ]
 
-    with sqlite3.connect('spotify_test.db') as conn:
+    with sqlite3.connect(DB_PATH) as conn:
         cursor = conn.cursor()
         create_table_query = """
         CREATE TABLE IF NOT EXISTS listening_history (
@@ -47,7 +52,8 @@ def run_pipeline():
 
         cursor.executemany(insert_or_ignore_query, data_to_insert)
 
-        print(f"Done. Check your DB, just processed {len(data_to_insert)} tracks.")
+        # print(f"Done at {datetime.now(UTC)}. Processed {len(data_to_insert)} tracks.")
+        print(f"[COLLECTOR] {datetime.now(UTC).isoformat()} | inserted={len(data_to_insert)}")
 
 if __name__ == "__main__":
     run_pipeline()
