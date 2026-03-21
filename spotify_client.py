@@ -3,7 +3,8 @@ import os
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
-load_dotenv()
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+load_dotenv(os.path.join(BASE_DIR, ".env"))
 
 SCOPE = "user-read-recently-played"
 
@@ -16,7 +17,8 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
     client_id=client_id,
     client_secret=client_secret,
     redirect_uri=redirect_uri,
-    scope=SCOPE
+    scope=SCOPE,
+    cache_path=os.path.join(BASE_DIR, ".cache")
 ))
 
 def fetch_recent_tracks(limit=50):
