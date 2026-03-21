@@ -119,15 +119,18 @@ def send_email(html_content):
         smtp.send_message(msg)
         print("html email send")
 
+def run_report():
+    queries = create_queries_dict(os.path.join(BASE_DIR, 'wrapped_queries.sql'))
 
-queries = create_queries_dict(os.path.join(BASE_DIR, 'wrapped_queries.sql'))
+    results = exec_query(queries['total_time'])
+    total_time = results[0][0] if results and results[0][0] is not None else 0
 
-results = exec_query(queries['total_time'])
-total_time = results[0][0] if results and results[0][0] is not None else 0
+    top_artists = exec_query(queries['top_five_artists'])
+    top_songs = exec_query(queries['top_ten_songs'])
 
-top_artists = exec_query(queries['top_five_artists'])
-top_songs = exec_query(queries['top_ten_songs'])
+    html = format_results_to_html(total_time, top_artists, top_songs)
 
-html = format_results_to_html(total_time, top_artists, top_songs)
+    send_email(html)
 
-send_email(html)
+if __name__ == "__main__":
+    run_report()
