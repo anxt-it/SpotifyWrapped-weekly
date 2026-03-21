@@ -4,6 +4,8 @@ import smtplib
 from email.message import EmailMessage
 import os
 from dotenv import load_dotenv
+from datetime import datetime, UTC
+
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -117,7 +119,8 @@ def send_email(html_content):
         smtp.starttls()
         smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
         smtp.send_message(msg)
-        print("html email send")
+        print(f"[REPORTER] {datetime.now(UTC).isoformat()}")
+
 
 def run_report():
     queries = create_queries_dict(os.path.join(BASE_DIR, 'wrapped_queries.sql'))
