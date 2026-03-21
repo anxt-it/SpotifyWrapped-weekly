@@ -6,7 +6,9 @@ import os
 from dotenv import load_dotenv
 
 
-load_dotenv()
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+load_dotenv(os.path.join(BASE_DIR, ".env"))
+
 EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS")
 EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
 SMTP_SERVER = os.getenv("SMTP_SERVER")
@@ -31,7 +33,7 @@ def create_queries_dict(queries_file):
 
 
 def exec_query(sql_query):
-    with sqlite3.connect('spotify_test.db') as conn:
+    with sqlite3.connect(os.path.join(BASE_DIR, 'spotify_listening_history.db')) as conn:
         cursor = conn.cursor()
         cursor.execute(sql_query)
 
@@ -71,7 +73,7 @@ def build_top_songs_section(top_songs_results):
     """
 
 def build_total_time_section(total_time_results):
-    return f"<h3>This week you spent {total_time_results} seconds with your music.</h3>"
+    return f"<h3>This week you spent {total_time_results} minutes with your music.</h3>"
 
 
 def format_results_to_html(total_time, top_artist, top_songs):
@@ -118,9 +120,11 @@ def send_email(html_content):
         print("html email send")
 
 
-queries = create_queries_dict('wrapped_queries.sql')
+queries = create_queries_dict(os.path.join(BASE_DIR, 'wrapped_queries.sql'))
 
-total_time = exec_query(queries['total_time'])[0][0] if exec_query(queries['total_time']) else 0.0
+results = exec_query(queries['total_time'])
+total_time = results[0][0] if results and results[0][0] is not None else 0
+
 top_artists = exec_query(queries['top_five_artists'])
 top_songs = exec_query(queries['top_ten_songs'])
 
