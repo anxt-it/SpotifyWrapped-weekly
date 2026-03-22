@@ -4,7 +4,7 @@ A Python-based data pipeline that tracks your Spotify listening habits and sends
 
 **Current version: v1 (MVP)**
 
-The focus of v1 was building a reliable, fully automated pipeline with clean seperation between extraction, transformation, loading, and reporting. 
+The focus of v1 was building a reliable, fully automated pipeline with clean separation between extraction, transformation, loading, and reporting. 
 
 ## Project Structure
 - `spotify_client.py`: Centralized Spotify API authentication.
@@ -14,7 +14,7 @@ The focus of v1 was building a reliable, fully automated pipeline with clean sep
 - `reporter.py`: Parses SQL queries, builds HTML, and sends emails.
 
 ## Tech Stack
-- **Language:** Python 3.x
+- **Language:** Python 3
 - **API:** Spotipy (Spotify Web API)
 - **Database:** SQLite
 - **Automation:** Cron
@@ -28,7 +28,7 @@ Currently rearchitecting the system to handle deeper analytics and a more scalab
 
 
 ## Setup
-1. Clone the repository.
-2. Create a `.env` file with your Spotify and SMTP credentials.
+1. Clone the repository
+2. Create a `.env` file with your Spotify and SMTP credentials
 3. Install dependencies: `pip install -r requirements.txt`
-4. Set up Cron jobs for hourly collection and weekly reporting.
+4. Set up Cron jobs for hourly collection and weekly reporting
