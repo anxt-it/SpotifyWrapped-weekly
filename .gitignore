@@ -17,5 +17,5 @@ venv/
 
 # Project Specific
 tests/
-example_file/
+example_files/
 v1_log_files/
