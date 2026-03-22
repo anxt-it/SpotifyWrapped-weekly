@@ -52,7 +52,6 @@ def run_pipeline():
 
         cursor.executemany(insert_or_ignore_query, data_to_insert)
 
-        # print(f"Done at {datetime.now(UTC)}. Processed {len(data_to_insert)} tracks.")
         print(f"[COLLECTOR] {datetime.now(UTC).isoformat()} | inserted={len(data_to_insert)}")
 
 if __name__ == "__main__":

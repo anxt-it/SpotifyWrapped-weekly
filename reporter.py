@@ -110,9 +110,6 @@ def send_email(html_content):
     msg['From'] = EMAIL_ADDRESS
     msg['To'] = EMAIL_ADDRESS
 
-    # with open('email_template.html', 'r', encoding='utf-8') as f:
-    #     html_content = f.read()
-
     msg.add_alternative(html_content, subtype='html')
 
     with smtplib.SMTP(SMTP_SERVER, int(SMTP_PORT)) as smtp:
