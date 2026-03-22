@@ -1,12 +1,11 @@
-# 🎧 Spotify Weekly Wrapped (Automated)
+# 🎧 Spotify Weekly Wrapped 
 
 A Python-based data pipeline that tracks your Spotify listening habits and sends a personalized "Weekly Wrapped" report to your email every Saturday.
 
-## Features
-- **Automated Collection:** Runs hourly via Cron to fetch recently played tracks.
-- **SQLite database storage:** Uses SQLite with `INSERT OR IGNORE` logic to prevent duplicate entries.
-- **SQL Analytics:** Analysis is decoupled from Python logic using external `.sql` query files.
-- **Email Reporting:** Generates and sends a stylized HTML email with top artists, songs, and total listening time.
+---
+**Current version: v1 (MVP)**
+
+The focus of v1 was building a reliable, fully automated pipeline with clean seperation between extraction, transformation, loading, and reporting. 
 
 ## Project Structure
 - `spotify_client.py`: Centralized Spotify API authentication.
@@ -20,8 +19,15 @@ A Python-based data pipeline that tracks your Spotify listening habits and sends
 - **API:** Spotipy (Spotify Web API)
 - **Database:** SQLite
 - **Automation:** Cron
-- **Infrastructure:** `python-dotenv` for secret management, `smtplib` for email delivery, `spotipy` for spotify's API
 
+---
+## Future Roadmap: Version 2.0 || In Progress 
+Currently rearchitecting the system to handle deeper analytics and a more scalable data model.
+- **Relational Schema:** Moving from a flat table to a normalized database (Tracks, Artists, Albums, and Plays) to handle many-to-many relationships.
+- **Audio Feature Integration:** Incorporating track metadata like `energy`, `danceability`, and `valence` for mood based analysis.
+- **Frontend Dashboard:** Transitioning from static emails to a dynamic **React** dashboard for real-time data visualization.
+
+---
 ## Setup
 1. Clone the repository.
 2. Create a `.env` file with your Spotify and SMTP credentials.
