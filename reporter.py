@@ -106,7 +106,7 @@ def format_results_to_html(total_time, top_artist, top_songs):
 
 def send_email(html_content):
     msg = EmailMessage()
-    msg['Subject'] = "Html email test"
+    msg['Subject'] = "Weekly Spotify Wrapped"
     msg['From'] = EMAIL_ADDRESS
     msg['To'] = EMAIL_ADDRESS
 
