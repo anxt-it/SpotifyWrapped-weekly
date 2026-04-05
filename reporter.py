@@ -75,11 +75,12 @@ def build_top_songs_section(top_songs_results):
     """
 
 def build_total_time_section(total_time_results):
+    time = 'minutes'
     if total_time_results > 60:
         total_time_results = total_time_results / 60
-        return f"<h3>This week you spent {total_time_results} hours with your music.</h3>"
-    else:
-        return f"<h3>This week you spent {total_time_results} minutes with your music.</h3>"
+        time = 'hours'
+
+    return f"<h3>This week you spent {total_time_results} {time} with your music.</h3>"
 
 
 def format_results_to_html(total_time, top_artist, top_songs):
