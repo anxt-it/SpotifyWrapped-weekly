@@ -17,7 +17,7 @@ The focus of v1 was building a reliable, fully automated pipeline with clean sep
 - **Language:** Python 3
 - **API:** Spotipy (Spotify Web API)
 - **Database:** SQLite
-- **Automation:** Cron
+- **Automation:** launchd
 
 
 ## Future Roadmap: Version 2.0 || In Progress 
