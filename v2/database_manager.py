@@ -11,9 +11,10 @@ def init_db():
     init_queries ={
     "Plays": """
     CREATE TABLE IF NOT EXISTS Plays (
-        track_id TEXT,
+        track_id TEXT PRIMARY KEY,
         played_at TEXT UNIQUE, 
-        exrtaction_id INT
+        exrtaction_id INT,
+        FOREIGN KEY (track_id) REFRENCES Tracks(track_id)
     )
     """,
     "Tracks": """
@@ -31,7 +32,8 @@ def init_db():
         loudness FLOAT,
         mode INT, 
         tempo FLOAT,
-        valence FLOAT
+        valence FLOAT,
+        FOREIGN KEY (album_id) REFRENCES Albums(album_id)
     )
     """,
     "Albums": """
@@ -52,13 +54,20 @@ def init_db():
     "Tracks_Artists": """
     CREATE TABLE IF NOT EXISTS Tracks_Artists (
         track_id TEXT,
-        artist_id TEXT
+        artist_id TEXT,
+        PRIMARY KEY (track_id, artist_id),
+        FOREIGN KEY (track_id) REFERENCES Tracks(track_id),
+        FOREIGN KEY (artist_id) REFERENCES Artists(artist_id)
+        
     )
     """,
     "Albums_Artists": """
     CREATE TABLE IF NOT EXISTS Albums_Artists (
         album_id TEXT,
-        artist_id TEXT
+        artist_id TEXT,
+        PRIMARY KEY (album_id, artist_id),
+        FOREIGN KEY (album_id) REFERENCES Albums(album_id),
+        FOREIGN KEY (artist_id) REFERENCES Artists(artist_id)
     )
     """
     # "Extraction_log": """
