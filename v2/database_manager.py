@@ -38,20 +38,26 @@ def init_db():
     CREATE TABLE IF NOT EXISTS Albums (
         album_id TEXT PRIMARY KEY, 
         album_name TEXT, 
-        album_artist_id TEXT, 
+        album_type TEXT,
+        album_release_date DATETIME,
         album_image TEXT
     )
     """,
     "Artists": """
     CREATE TABLE IF NOT EXISTS Artists (
         artist_id TEXT PRIMARY KEY, 
-        artist_name TEXT,
-        artist_image TEXT
+        artist_name TEXT
     )
     """,
-    "Track_Artists": """
-    CREATE TABLE IF NOT EXISTS Track_Artists (
+    "Tracks_Artists": """
+    CREATE TABLE IF NOT EXISTS Tracks_Artists (
         track_id TEXT,
+        artist_id TEXT
+    )
+    """,
+    "Albums_Artists": """
+    CREATE TABLE IF NOT EXISTS Albums_Artists (
+        album_id TEXT,
         artist_id TEXT
     )
     """
@@ -75,24 +81,28 @@ def insert(data_dict):
     insert_ignore_queries = {
          "Albums": """
          INSERT OR IGNORE INTO Albums (
-         album_id, album_name, album_artist_id, album_image
-         ) VALUES (?,?,?,?) 
+         album_id, album_name, album_type, album_release_date, album_image
+         ) VALUES (?,?,?,?,?) 
          """,
          "Artists": """
         INSERT OR IGNORE INTO Artists (
-         artist_id, artist_name, artist_image
-         ) VALUES (?,?,?) 
+         artist_id, artist_name
+         ) VALUES (?,?) 
+         """,
+         "Tracks_Artists": """
+         INSERT OR IGNORE INTO Tracks_Artists (track_id, artist_id) VALUES (?,?)
+         """,
+        "Albums_Artists": """
+                         INSERT
+                         OR IGNORE INTO Albums_Artists (album_id, artist_id) VALUES (?,?)
+                         """,
+         "Plays":"""
+         INSERT OR IGNORE INTO Plays (track_id, played_at) VALUES (?,?)
          """,
          "Tracks": """
          INSERT OR IGNORE INTO Tracks 
          (track_id, track_name, album_id, duration_ms, acousticness, danceability, energy, instrumental, key, liveness,loudness,mode, tempo, valence)
         VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)
-         """,
-         "Track_Artists": """
-         INSERT OR IGNORE INTO Track_Artists (track_id, artist_id) VALUES (?,?)
-         """,
-         "Plays":"""
-         INSERT OR IGNORE INTO Plays (track_id, played_at) VALUES (?,?)
          """
      }
 
@@ -101,13 +111,17 @@ def insert(data_dict):
             cursor = conn.cursor()
 
             for table in insert_ignore_queries:
+                print("table name: ", table)
                 query = insert_ignore_queries[table]
-                data_to_insert = data_dict.get(table, []) # this is a list with x values (x rows)
+                data_to_insert = data_dict.get(table, [])
+                print("data to insert: ", data_to_insert)
                 cursor.executemany(query, data_to_insert)
 
     except Exception as e:
         print("[DB ERROR]", e)
         raise
+
+
 
 
 # handle the queries for the reporter
@@ -125,6 +139,7 @@ def create_queries_dict(queries_file):
         queries_dict[match[0]] = match[1]
 
     return queries_dict
+
 
 def exec_query(sql_query):
     with sqlite3.connect(os.path.join(BASE_DIR, 'spotify_listening_history.db')) as conn:
