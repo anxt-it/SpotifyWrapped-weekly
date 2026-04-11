@@ -68,7 +68,7 @@ def get_tables_results(spotify_json, audio_features_dict):
 
         # create Plays table results
         plays_list.append(
-            (track_id, item["played_at"]) # track_id, played_at
+            [track_id, item["played_at"]] # track_id, played_at
         )
 
         # create Tracks table results
