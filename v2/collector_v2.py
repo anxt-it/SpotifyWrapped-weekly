@@ -2,7 +2,6 @@ import reccobeats_client, transformer, database_manager, spotify_client
 import os
 import sys
 
-# initialize process, and get log
 PARENT_DIR = os.path.dirname(os.path.abspath(__file__))
 MANUAL_LOG_PATH = os.path.join(PARENT_DIR, "collector_log.txt")
 
