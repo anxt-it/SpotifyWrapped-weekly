@@ -1,11 +1,11 @@
 from dotenv import load_dotenv
 import os
 import spotipy
-from spotipy import SpotifyException
 from spotipy.oauth2 import SpotifyOAuth
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-load_dotenv(os.path.join(BASE_DIR, ".env"))
+
+PARENT_DIR = os.path.dirname(os.getcwd())
+load_dotenv(os.path.join(PARENT_DIR, ".env"))
 
 SCOPE = "user-read-recently-played"
 
@@ -18,11 +18,10 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
     client_secret=client_secret,
     redirect_uri=redirect_uri,
     scope=SCOPE,
-    cache_path=os.path.join(BASE_DIR, ".cache")
+    cache_path=os.path.join(PARENT_DIR, ".cache")
 ))
 
 def fetch_recent_tracks(limit=50):
-
     try:
         data = sp.current_user_recently_played(limit=limit)
         return {
