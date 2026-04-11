@@ -2,8 +2,8 @@ import reccobeats_client, transformer, database_manager, spotify_client
 import os
 import sys
 
-PARENT_DIR = os.path.dirname(os.path.abspath(__file__))
-MANUAL_LOG_PATH = os.path.join(PARENT_DIR, "collector_log.txt")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MANUAL_LOG_PATH = os.path.join(BASE_DIR, "collector_log.txt")
 
 
 def log_locally(message):
@@ -74,6 +74,8 @@ def main():
     if not update_result_db["success"]:
         log_locally(f"DB FAIL. DB UPDATE FAIL FOR {current_log_id}. ERROR: {update_result_db['error']}")
 
+if __name__ == "__main__":
+    main()
 
 
 
