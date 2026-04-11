@@ -18,4 +18,7 @@ venv/
 # Project Specific
 tests/
 example_files/
-v1_log_files/
+
+v1/collector_log.txt
+v2/collector_log.txt
+v1/reporter_log.txt
