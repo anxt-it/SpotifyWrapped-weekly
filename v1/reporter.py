@@ -7,9 +7,10 @@ from dotenv import load_dotenv
 from datetime import datetime, UTC
 
 
-
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-load_dotenv(os.path.join(BASE_DIR, ".env"))
+PARENT_DIR = os.path.dirname(BASE_DIR)
+load_dotenv(os.path.join(PARENT_DIR, ".env"))
+
 
 EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS")
 EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
