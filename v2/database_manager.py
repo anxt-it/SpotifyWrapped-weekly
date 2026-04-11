@@ -41,6 +41,7 @@ def init_db():
         played_at TEXT UNIQUE, 
         log_id INT,
         FOREIGN KEY (track_id) REFERENCES Tracks(track_id)
+        FOREIGN KEY (log_id) REFERENCES Logs(log_id)
     )
     """,
     "Tracks": """
@@ -97,7 +98,7 @@ def init_db():
     )
     """,
     "Logs": """
-    CREATE TABLE IF NOT EXISTS Extraction_log (
+    CREATE TABLE IF NOT EXISTS Logs (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         extraction_date DATETIME DEFAULT CURRENT_TIMESTAMP,
         spotify_status TEXT,
@@ -158,7 +159,6 @@ def insert(data_dict):
                 data_to_insert = data_dict.get(table, [])
 
                 cursor.executemany(query, data_to_insert)
-                cursor.executemany(query, data_to_insert)
 
         return {
             "success": True,
@@ -184,7 +184,7 @@ def insert_logs(logs_to_insert):
             VALUES (?,?,?,?,?,?)
             """
 
-            cursor.executemany(query, logs_to_insert)
+            cursor.execute(query, logs_to_insert)
         return {
             "success": True,
             "error": None,
@@ -199,3 +199,23 @@ def insert_logs(logs_to_insert):
        }
 
 
+def update_logs(log_id, log_row):
+    try:
+        with sqlite3.connect(DB_PATH) as conn:
+            cursor = conn.cursor()
+
+            query = """
+            UPDATE Logs
+            SET spotify_status = ?, spotify_error = ?, reccobeats_status = ?, reccobeats_error = ?, db_status = ?, db_error = ?
+            WHERE id = ?
+            """
+            cursor.execute(query, (*log_row, log_id))
+        return {
+            "success": True,
+            "error": None
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e)
+        }
