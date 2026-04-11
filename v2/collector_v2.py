@@ -29,7 +29,7 @@ def main():
     if current_log_id is None:
         sys.exit()
 
-    spotify_raw_results = spotify_client.fetch_recent_tracks(limit=3)
+    spotify_raw_results = spotify_client.fetch_recent_tracks(limit=40)
 
     if not spotify_raw_results["success"]:
         spotify_status = "FAILED"

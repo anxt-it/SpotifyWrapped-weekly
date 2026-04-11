@@ -5,7 +5,7 @@ from datetime import datetime, UTC
 
 # create a create_tables_query dict
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(BASE_DIR, 'spotify_v2_test.db')
+DB_PATH = os.path.join(BASE_DIR, 'spotify_v2.db')
 
 
 # handle the queries for the reporter
