@@ -137,5 +137,6 @@ def run_report():
 
     send_email(html)
 
+
 if __name__ == "__main__":
     run_report()
