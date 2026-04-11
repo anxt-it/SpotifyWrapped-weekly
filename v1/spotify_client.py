@@ -3,7 +3,8 @@ import os
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
-PARENT_DIR = os.path.dirname(os.getcwd())
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PARENT_DIR = os.path.dirname(BASE_DIR)
 load_dotenv(os.path.join(PARENT_DIR, ".env"))
 
 SCOPE = "user-read-recently-played"
