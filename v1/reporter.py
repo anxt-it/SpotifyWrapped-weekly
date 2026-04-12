@@ -126,7 +126,7 @@ def send_email(html_content):
 
 
 def run_report():
-    queries = create_queries_dict(os.path.join(BASE_DIR, 'wrapped_queries.sql'))
+    queries = create_queries_dict(os.path.join(PARENT_DIR, 'wrapped_queries.sql'))
 
     results = exec_query(queries['total_time'])
     total_time = results[0][0] if results and results[0][0] is not None else 0
@@ -137,6 +137,8 @@ def run_report():
     html = format_results_to_html(total_time, top_artists, top_songs)
 
     send_email(html)
+
+
 
 
 if __name__ == "__main__":

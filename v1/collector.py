@@ -9,6 +9,7 @@ from recent_tracks import get_recent_tracks
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(BASE_DIR, 'spotify_listening_history.db')
 
+
 def run_pipeline():
 
     # extraction
@@ -54,5 +55,5 @@ def run_pipeline():
 
         print(f"[COLLECTOR] {datetime.now(UTC).isoformat()} | inserted={len(data_to_insert)}")
 
-if __name__ == "__main__":
-    run_pipeline()
+# if __name__ == "__main__":
+#     run_pipeline()
